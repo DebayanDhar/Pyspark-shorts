@@ -1,0 +1,98 @@
+#Problem Statement: You are given two datasets representing cricket players' statistics and
+their associated country information. Your task is to transform and analyze this data using
+PySpark.
+
+Dataset 1: Players
+This dataset contains information about cricket players, including their names, total runs scored,
+and their 50s and 100s in the format player-COUNTRY_CODE. Columns: player: The name of the
+player concatenated with a hyphen and the country code (e.g., Sachin-IND). runs: The total runs
+scored by the player. 50s/100s: The number of 50s and 100s scored by the player, separated by a
+forward slash (e.g., 93/49).
+
++--------------+-----+--------+
+|        player| runs|50s/100s|
++--------------+-----+--------+
+| DeVilliers-SL| 4867|   60/18|
+|     Smith-ENG|14249|   95/39|
+|      Root-AUS| 1639|   35/40|
+|Williamson-BAN| 1415|   51/33|
+|     Babar-PAK|12544|   94/34|
+|     Sachin-WI|14224|   70/50|
+|       Root-SA| 4564|   51/29|
+|   Ponting-ENG| 7171|   70/50|
+|       Root-SL| 8181|    99/3|
+|      Root-BAN| 1162|   39/10|
+|      Gayle-NZ| 6533|   70/50|
+|    Sachin-PAK| 3078|    57/3|
+| Williamson-NZ| 3890|   91/40|
+|     Warner-SL| 2586|   34/20|
+|    Sachin-AUS| 8913|   69/40|
+|Williamson-AUS| 4731|   18/41|
+|    Sachin-AFG| 3592|   98/32|
+|Williamson-AFG| 1406|   95/13|
+|     Gayle-AUS|13990|   17/25|
+|     Babar-BAN|12005|    75/2|
++--------------+-----+--------+
+
+Dataset 2: Countries
+This dataset maps the country code to the full country name. Columns: SRT: The country code
+(e.g., IND). country: The full name of the country (e.g., India).
+
++---+------------+
+|SRT|     country|
++---+------------+
+|IND|       India|
+|AUS|   Australia|
+|ENG|     England|
+| SA|South Africa|
+| NZ| New Zealand|
+|PAK|    Pakistan|
+| WI| West Indies|
+| SL|   Sri Lanka|
+|BAN|  Bangladesh|
+|AFG| Afghanistan|
++---+------------+
+
+Task: Extract Information from source datasets provided in csv files
+Split the player column in the Players dataset into two separate fields: player_name: The name
+of the player. SRT: The country code. Split the 50s/100s column into two separate fields:
+runs_50s: The number of 50s. runs_100s: The number of 100s. Join the Datasets:
+Perform an inner join between the transformed Players dataset and the Countries dataset using
+the SRT field to map country codes to full country names. Calculate the Sum:
+Calculate the sum of 50s and 100s for each player. 
+Filter:
+Filter the results to include only those players whose sum of 50s and 100s is greater than 90.
+Sort:
+Sort the filtered results by country name.
+
++-----------+------------+-----+--------------+
+|player_name|country_name| runs|total_50s_100s|
++-----------+------------+-----+--------------+
+|      Kohli| Afghanistan| 1523|           110|
+| DeVilliers| Afghanistan| 2286|           102|
+| Williamson| Afghanistan| 1406|           108|
+|      Babar| Afghanistan|13384|           122|
+|      Gayle| Afghanistan|13989|           112|
+|     Sachin| Afghanistan| 3592|           130|
+|     Sachin|   Australia| 1592|           109|
+|     Sachin|   Australia| 8913|           109|
+|      Smith|   Australia| 3777|            96|
+|    Ponting|     England| 7171|           120|
+|      Smith|     England|14249|           134|
+| Williamson|     England|14514|           142|
+|      Smith|       India| 1463|           141|
+|      Kohli|       India|10474|           131|
+| Williamson| New Zealand| 3890|           131|
+|       Root| New Zealand| 3645|           131|
+|      Gayle| New Zealand| 6533|           120|
+|     Warner| New Zealand|14858|           108|
+|      Babar|    Pakistan| 1237|           131|
+|    Ponting|    Pakistan|10078|           142|
+| Williamson|    Pakistan| 3927|           142|
+|      Kohli|    Pakistan|13807|           126|
+|      Babar|    Pakistan|12544|           128|
+|       Root|   Sri Lanka| 8181|           102|
+|     Sachin| West Indies|14224|           120|
+|      Babar| West Indies| 3092|           131|
+|     Sachin| West Indies| 2279|            96|
++-----------+------------+-----+--------------+
